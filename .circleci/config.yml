@@ -98,6 +98,6 @@ workflows:
       #- say-hello
   my_workflow:
     jobs:
-       - create_infrastructure
+      - create_infrastructure
        #- configure_infrastructure
-        - smoke_test
+      - smoke_test
