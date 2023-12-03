@@ -43,6 +43,6 @@ workflows:
   #say-hello-workflow:
     #jobs:
       #- say-hello
-    my_workflow:
-      jobs:
-        -  create_insfrastructure
+  my_workflow:
+    jobs:
+       - create_insfrastructure
