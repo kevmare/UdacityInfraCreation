@@ -91,20 +91,7 @@ jobs:
           #command:  return 1
       #- destroy_environment  
 
-  create_new_stack:
-    docker:
-      - image: amazon/aws-cli
-    steps:
-      - checkout
-      - run:
-          name: Execute bucket.yml - Create Cloudformation Stack
-          command: |
-            aws cloudformation deploy \
-            --template-file cloudfront.yml \
-            --stack-name production-distro \
-            --parameter-overrides PipelineID="myawsbucket510176326752" \
-
-  #create_and_deploy_front_end:
+  #create_new_stack:
     #docker:
       #- image: amazon/aws-cli
     #steps:
@@ -113,9 +100,22 @@ jobs:
           #name: Execute bucket.yml - Create Cloudformation Stack
           #command: |
             #aws cloudformation deploy \
-           #--template-file bucket.yml \
-           # --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
-           # --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
+            #--template-file cloudfront.yml \
+            #--stack-name production-distro \
+            #--parameter-overrides PipelineID="myawsbucket510176326752" \
+
+  create_and_deploy_front_end:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml - Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+            --template-file bucket.yml \
+            --stack-name stack-create-bucket-${CIRCLE_WORKFLOW_ID:0:7} \
+            --parameter-overrides MyBucketName="mybucket-${CIRCLE_WORKFLOW_ID:0:7}"
       # Uncomment the step below if you wish to upload all contents of the current directory to the S3 bucket
       #- run: aws s3 sync . s3://mybucket-${CIRCLE_WORKFLOW_ID:0:7} --delete
 
@@ -173,11 +173,11 @@ workflows:
       #- say-hello
   my_workflow:
     jobs:
-      - create_new_stack
+      #- create_new_stack
       #- create_infrastructure
        #- configure_infrastructure
       #- smoke_test
-      #- create_and_deploy_front_end
+      - create_and_deploy_front_end
       #- promote_to_production:
           #requires: 
            # - create_and_deploy_front_end
