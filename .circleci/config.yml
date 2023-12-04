@@ -102,7 +102,7 @@ jobs:
             aws cloudformation deploy \
             --template-file cloudfront.yml \
             --stack-name production-distro \
-            --parameter-overrides PipelineID="myawsbucket510176326752" \ # Name of the S3 bucket you created manually.
+            --parameter-overrides PipelineID="myawsbucket510176326752" \
 
   #create_and_deploy_front_end:
     #docker:
