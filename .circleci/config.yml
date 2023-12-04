@@ -91,10 +91,18 @@ jobs:
           #command:  return 1
       #- destroy_environment  
 
-  aws cloudformation deploy \
-  --template-file cloudfront.yml \
-  --stack-name production-distro \
-  --parameter-overrides PipelineID="myawsbucket510176326752" \ # Name of the S3 bucket you created manually.
+  create_new_stack:
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Execute bucket.yml - Create Cloudformation Stack
+          command: |
+            aws cloudformation deploy \
+            --template-file cloudfront.yml \
+            --stack-name production-distro \
+            --parameter-overrides PipelineID="myawsbucket510176326752" \ # Name of the S3 bucket you created manually.
 
   #create_and_deploy_front_end:
     #docker:
@@ -165,6 +173,7 @@ workflows:
       #- say-hello
   my_workflow:
     jobs:
+      - create_new_stack
       #- create_infrastructure
        #- configure_infrastructure
       #- smoke_test
